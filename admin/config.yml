@@ -4,6 +4,7 @@ backend:
   branch: main
   base_url: https://api.netlify.com
   auth_endpoint: auth
+  site_domain: sohagkumarsaha.netlify.app
 
 local_backend: true
 publish_mode: editorial_workflow
