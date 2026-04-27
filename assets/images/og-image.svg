@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#f7f7f7"/>
+  <rect x="80" y="80" width="1040" height="470" rx="28" fill="#ffffff" stroke="#e6e6e6"/>
+  <circle cx="210" cy="210" r="68" fill="#1a8917"/>
+  <text x="210" y="226" text-anchor="middle" font-family="Georgia, serif" font-size="48" fill="#ffffff">S</text>
+  <text x="310" y="210" font-family="Georgia, serif" font-size="58" font-weight="700" fill="#242424">Sohag Kumar Saha</text>
+  <text x="310" y="280" font-family="Arial, sans-serif" font-size="30" fill="#6b6b6b">Academic Blog · Research · Code · Teaching</text>
+  <line x1="120" y1="380" x2="1080" y2="380" stroke="#1a8917" stroke-width="5"/>
+  <text x="120" y="455" font-family="Georgia, serif" font-size="44" fill="#242424">Ideas, experiments, and notes from academic life.</text>
+</svg>
