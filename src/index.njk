@@ -1,0 +1,26 @@
+---
+layout: base.njk
+title: "Academic Blog"
+description: "The 10 most recent research notes, code posts, teaching reflections, and academic blog entries."
+---
+<section class="hero">
+  <p class="eyebrow">Academic Blog</p>
+  <h1>Research notes, code experiments, and academic reflections.</h1>
+  <p>This front page automatically shows the 10 most recent posts and generates category filters from post front matter.</p>
+</section>
+
+<section id="blog" aria-labelledby="latest-posts-heading">
+  <h2 id="latest-posts-heading">Latest posts</h2>
+  <div class="category-tabs" aria-label="Filter posts by category">
+    <button class="category-tab is-active" type="button" data-category-filter="all">All</button>
+    {% for category in collections.allCategories %}
+      <button class="category-tab" type="button" data-category-filter="{{ category }}">{{ category | title }}</button>
+    {% endfor %}
+  </div>
+
+  <div class="post-grid">
+    {% for post in collections.latestPosts %}
+      {% include "post-card.njk" %}
+    {% endfor %}
+  </div>
+</section>

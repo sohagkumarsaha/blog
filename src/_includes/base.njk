@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  {% set pageTitle = title if title else site.title %}
+  {% set pageDescription = description if description else site.description %}
+  {% set canonicalUrl = site.url + page.url %}
+  <title>{{ pageTitle }}{% if pageTitle != site.title %} | {{ site.author }}{% endif %}</title>
+  <meta name="description" content="{{ pageDescription }}">
+  <link rel="canonical" href="{{ canonicalUrl }}">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="{{ pageTitle }}">
+  <meta property="og:description" content="{{ pageDescription }}">
+  <meta property="og:url" content="{{ canonicalUrl }}">
+  <meta property="og:image" content="{{ site.ogImage }}">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="{{ '/assets/images/avatar.svg' | url }}" type="image/svg+xml">
+  <link rel="stylesheet" href="{{ '/assets/css/style.css' | url }}">
+</head>
+<body data-current-url="{{ page.url }}" data-site-root="{{ '/' | url }}">
+  {% include "header.njk" %}
+
+  <div class="site-shell">
+    <main id="main-content" class="content-area">
+      {% if title and page.url != '/' %}
+        <article class="article-page">
+          <header class="article-header">
+            <p class="eyebrow">{{ category if category else 'Academic Blog' }}</p>
+            <h1>{{ title }}</h1>
+            {% if date %}<p class="post-meta">{{ date | dateDisplay }}</p>{% endif %}
+            {% if tags %}
+              <div class="tag-list" aria-label="Tags">
+                {% for tag in tags %}<span class="tag">#{{ tag }}</span>{% endfor %}
+              </div>
+            {% endif %}
+          </header>
+          <div class="article-content">
+            {{ content | safe }}
+          </div>
+        </article>
+      {% else %}
+        {{ content | safe }}
+      {% endif %}
+    </main>
+
+    {% include "sidebar.njk" %}
+  </div>
+
+  {% include "footer.njk" %}
+
+  <script>
+    window.__POSTS__ = {{ collections.posts | postsJson | safe }};
+  </script>
+  <script src="{{ '/assets/js/main.js' | url }}"></script>
+  <script src="{{ '/assets/js/slider.js' | url }}"></script>
+  <script src="{{ '/assets/js/tabs.js' | url }}"></script>
+  <script src="{{ '/assets/js/accordion.js' | url }}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-matlab.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-c.min.js"></script>
+</body>
+</html>

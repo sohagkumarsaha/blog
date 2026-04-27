@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400" role="img" aria-label="Profile avatar">
+  <rect width="400" height="400" rx="200" fill="#1a8917"/>
+  <circle cx="200" cy="145" r="72" fill="#fff" opacity="0.92"/>
+  <path d="M84 342c22-75 72-112 116-112s94 37 116 112" fill="#fff" opacity="0.92"/>
+  <text x="200" y="382" text-anchor="middle" font-family="Georgia, serif" font-size="38" fill="#ffffff">SKS</text>
+</svg>

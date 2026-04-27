@@ -1,0 +1,50 @@
+backend:
+  name: github
+  repo: sohagkumarsaha/blog
+  branch: main
+  base_url: https://api.netlify.com
+  auth_endpoint: auth
+
+local_backend: true
+publish_mode: editorial_workflow
+media_folder: "src/assets/images/uploads"
+public_folder: "/blog/assets/images/uploads"
+
+site_url: "https://sohagkumarsaha.github.io/blog"
+display_url: "https://sohagkumarsaha.github.io/blog"
+logo_url: "https://sohagkumarsaha.github.io/blog/assets/images/avatar.svg"
+
+collections:
+  - name: "posts"
+    label: "Posts"
+    folder: "src/posts"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    extension: "md"
+    format: "frontmatter"
+    editor:
+      preview: true
+    fields:
+      - { label: "Layout", name: "layout", widget: "hidden", default: "base.njk" }
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Description", name: "description", widget: "text" }
+      - { label: "Date", name: "date", widget: "datetime", format: "YYYY-MM-DD" }
+      - { label: "Category", name: "category", widget: "string", default: "research" }
+      - { label: "Tags", name: "tags", widget: "list", default: ["research"] }
+      - { label: "Body", name: "body", widget: "markdown" }
+
+  - name: "pages"
+    label: "Pages"
+    folder: "src/pages"
+    create: true
+    slug: "{{slug}}"
+    extension: "md"
+    format: "frontmatter"
+    editor:
+      preview: true
+    fields:
+      - { label: "Layout", name: "layout", widget: "hidden", default: "base.njk" }
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Description", name: "description", widget: "text" }
+      - { label: "Permalink", name: "permalink", widget: "string" }
+      - { label: "Body", name: "body", widget: "markdown" }

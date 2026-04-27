@@ -1,0 +1,59 @@
+{% macro gallery(images) %}
+<div class="gallery-grid">
+  {% for image in images %}
+    <figure class="gallery-item">
+      <img src="{{ image.src }}" alt="{{ image.alt }}" loading="lazy">
+      {% if image.caption %}<figcaption>{{ image.caption }}</figcaption>{% endif %}
+    </figure>
+  {% endfor %}
+</div>
+{% endmacro %}
+
+{% macro slider(id, slides) %}
+<div class="slider" data-slider id="{{ id }}">
+  <div class="slider-track">
+    {% for slide in slides %}
+      <figure class="slide{% if loop.first %} is-active{% endif %}">
+        <img src="{{ slide.src }}" alt="{{ slide.alt }}" loading="lazy">
+        {% if slide.caption %}<figcaption>{{ slide.caption }}</figcaption>{% endif %}
+      </figure>
+    {% endfor %}
+  </div>
+  <button class="slider-btn slider-prev" type="button" aria-label="Previous slide">&#10094;</button>
+  <button class="slider-btn slider-next" type="button" aria-label="Next slide">&#10095;</button>
+  <div class="slider-dots" aria-label="Slide navigation"></div>
+</div>
+{% endmacro %}
+
+{% macro tabs(id, items) %}
+<div class="tabs" data-tabs id="{{ id }}">
+  <div class="tab-buttons" role="tablist" aria-label="Tabbed content">
+    {% for item in items %}
+      <button type="button" class="tab-button{% if loop.first %} is-active{% endif %}" role="tab" aria-selected="{{ 'true' if loop.first else 'false' }}" data-tab-target="{{ id }}-panel-{{ loop.index }}">{{ item.label }}</button>
+    {% endfor %}
+  </div>
+  <div class="tab-panels">
+    {% for item in items %}
+      <section class="tab-panel{% if loop.first %} is-active{% endif %}" id="{{ id }}-panel-{{ loop.index }}" role="tabpanel">
+        {{ item.content | safe }}
+      </section>
+    {% endfor %}
+  </div>
+</div>
+{% endmacro %}
+
+{% macro accordion(id, items) %}
+<div class="accordion" data-accordion id="{{ id }}">
+  {% for item in items %}
+    <div class="accordion-item">
+      <button type="button" class="accordion-trigger" aria-expanded="false" aria-controls="{{ id }}-content-{{ loop.index }}">
+        <span>{{ item.question }}</span>
+        <span class="accordion-icon">+</span>
+      </button>
+      <div class="accordion-content" id="{{ id }}-content-{{ loop.index }}">
+        {{ item.answer | safe }}
+      </div>
+    </div>
+  {% endfor %}
+</div>
+{% endmacro %}

@@ -1,0 +1,15 @@
+{
+  "name": "personal-academic-blog-eleventy-decap",
+  "version": "1.0.0",
+  "description": "A complete Eleventy academic blog with Decap CMS, Prism.js, vanilla JS components, and GitHub Pages deployment.",
+  "private": true,
+  "scripts": {
+    "start": "eleventy --serve",
+    "build": "eleventy",
+    "clean": "rm -rf _site"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^3.1.2",
+    "luxon": "^3.6.1"
+  }
+}

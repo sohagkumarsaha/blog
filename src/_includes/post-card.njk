@@ -1,0 +1,11 @@
+<article class="post-card" data-category="{{ post.data.category }}">
+  <p class="eyebrow">{{ post.data.category }}</p>
+  <h2><a href="{{ post.url | url }}">{{ post.data.title }}</a></h2>
+  <p class="post-meta">{{ post.date | dateDisplay }}</p>
+  <p>{{ post.data.description }}</p>
+  {% if post.data.tags %}
+    <div class="tag-list">
+      {% for tag in post.data.tags %}<span class="tag">#{{ tag }}</span>{% endfor %}
+    </div>
+  {% endif %}
+</article>
