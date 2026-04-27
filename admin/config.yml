@@ -11,9 +11,9 @@ publish_mode: editorial_workflow
 media_folder: "src/assets/images/uploads"
 public_folder: "/blog/assets/images/uploads"
 
-site_url: "https://sohagkumarsaha.github.io/blog"
-display_url: "https://sohagkumarsaha.github.io/blog"
-logo_url: "https://sohagkumarsaha.github.io/blog/assets/images/avatar.svg"
+site_url: "https://sohagkumarsaha.netlify.app/blog"
+display_url: "https://sohagkumarsaha.netlify.app/blog"
+logo_url: "https://sohagkumarsaha.netlify.app/blog/assets/images/avatar.svg"
 
 collections:
   - name: "posts"
