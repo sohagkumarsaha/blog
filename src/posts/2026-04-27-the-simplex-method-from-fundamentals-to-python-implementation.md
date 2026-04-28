@@ -1,6 +1,7 @@
 ---
 layout: base.njk
-title: "The Simplex Method: From Fundamentals to Python Implementation"
+title: "The Simplex Linear Programming Method: From Fundamentals to Python
+  Implementation"
 description: A comprehensive guide for graduate students and engineers —
   building from LP theory to a fully working tableau-based solver, coded from
   scratch
