@@ -44,10 +44,10 @@ $$
 
 where:
 
-* $(x_{old})$ is the current value of the variable.
-* $(x_{new})$ is the updated value after one step.
-* $(\alpha)& is the learning rate.
-* $(\frac{df(x)}{dx})$ is the gradient or derivative of the function.
+* $x_{old}$ is the current value of the variable.
+* $x_{new}$ is the updated value after one step.
+* $\alpha$ is the learning rate.
+* $\frac{df(x)}{dx}$ is the gradient or derivative of the function.
 
 The derivative tells us the slope of the function at the current point. If the slope is positive, the algorithm moves left. If the slope is negative, the algorithm moves right. Repeating this process brings the value of `x` closer to the minimum.
 
