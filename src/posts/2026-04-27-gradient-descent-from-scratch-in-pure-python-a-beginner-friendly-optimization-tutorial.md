@@ -10,8 +10,6 @@ category: Optimization
 tags:
   - machine_learning
 ---
-# Gradient Descent from Scratch in Pure Python: A Beginner-Friendly Optimization Tutorial
-
 Optimization is one of the most important ideas in engineering, data science, machine learning, control systems, and artificial intelligence. Many modern algorithms try to answer one simple question:
 
 > How can we find the best value of a variable that minimizes or maximizes a function?
