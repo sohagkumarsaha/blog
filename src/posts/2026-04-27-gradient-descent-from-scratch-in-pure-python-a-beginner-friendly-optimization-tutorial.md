@@ -10,7 +10,6 @@ category: Optimization
 tags:
   - machine_learning
 ---
-
 # Gradient Descent from Scratch in Pure Python: A Beginner-Friendly Optimization Tutorial
 
 Optimization is one of the most important ideas in engineering, data science, machine learning, control systems, and artificial intelligence. Many modern algorithms try to answer one simple question:
@@ -33,28 +32,28 @@ $$
 
 The Python code will start from an initial guess, repeatedly update the value of `x`, and gradually move toward the minimum point.
 
----
+- - -
 
 ## What Is Gradient Descent?
 
 **Gradient Descent** is an iterative optimization algorithm used to find the minimum value of a function. It works by moving step-by-step in the direction where the function decreases the fastest.
 
-For a function \(f(x)\), the basic update rule is:
+For a function (f(x)), the basic update rule is:
 
 $$
-x_{new} = x_{old} - \alpha \frac{df(x)}{dx}
+x*{new} = x*{old} - \alpha \frac{df(x)}{dx}
 $$
 
 where:
 
-- \(x_{old}\) is the current value of the variable.
-- \(x_{new}\) is the updated value after one step.
-- \(\alpha\) is the learning rate.
-- \(\frac{df(x)}{dx}\) is the gradient or derivative of the function.
+* $(x_{old})$ is the current value of the variable.
+* $(x_{new})$ is the updated value after one step.
+* $(\alpha)& is the learning rate.
+* $(\frac{df(x)}{dx})$ is the gradient or derivative of the function.
 
 The derivative tells us the slope of the function at the current point. If the slope is positive, the algorithm moves left. If the slope is negative, the algorithm moves right. Repeating this process brings the value of `x` closer to the minimum.
 
----
+- - -
 
 ## Why Learn Gradient Descent?
 
@@ -69,7 +68,7 @@ Gradient Descent is a foundational algorithm in many technical fields. It is wid
 
 Understanding Gradient Descent helps students understand how many advanced algorithms learn from data or improve system performance.
 
----
+- - -
 
 ## Working Principle of Gradient Descent
 
@@ -121,17 +120,17 @@ The learning rate controls the step size. A small learning rate may converge slo
 
 The algorithm continues updating `x` until the changes become very small. When the update difference is below a defined tolerance, the algorithm stops early.
 
----
+- - -
 
 ## Complete Python Code: Gradient Descent from Scratch
 
 The following code implements Gradient Descent using only built-in Python. It includes:
 
-- A user-defined objective function.
-- Numerical gradient calculation.
-- Automatic theoretical minimum estimation.
-- Iteration history recording.
-- A text-based ASCII convergence plot.
+* A user-defined objective function.
+* Numerical gradient calculation.
+* Automatic theoretical minimum estimation.
+* Iteration history recording.
+* A text-based ASCII convergence plot.
 
 ```python
 # =============================================
@@ -358,7 +357,7 @@ print("• The vertical '|' marks the final minimal point found.")
 print("• If the plot flattens at the bottom and matches the theoretical minimum, optimization worked!")
 ```
 
----
+- - -
 
 ## Explanation of the Code
 
@@ -379,7 +378,7 @@ return (x - 3) ** 2 + 5
 
 This new function would have its minimum near `x = 3`.
 
----
+- - -
 
 ### 2. Numerical Gradient Calculation
 
@@ -404,7 +403,7 @@ $$
 
 However, the code estimates this derivative numerically. This makes the implementation more flexible because we can change the objective function without changing the gradient function.
 
----
+- - -
 
 ### 3. Gradient Descent Update
 
@@ -416,7 +415,7 @@ This is the most important line in the program. It moves the current value of `x
 
 If the gradient is positive, the update decreases `x`. If the gradient is negative, the update increases `x`. The goal is to keep moving until the gradient becomes close to zero.
 
----
+- - -
 
 ### 4. Learning Rate
 
@@ -426,13 +425,13 @@ learning_rate = 0.1
 
 The learning rate determines the size of each step.
 
-- If the learning rate is too small, convergence will be slow.
-- If the learning rate is too large, the algorithm may overshoot the minimum.
-- A suitable learning rate helps the algorithm converge smoothly.
+* If the learning rate is too small, convergence will be slow.
+* If the learning rate is too large, the algorithm may overshoot the minimum.
+* A suitable learning rate helps the algorithm converge smoothly.
 
 For this simple function, `0.1` works well.
 
----
+- - -
 
 ### 5. Early Stopping
 
@@ -446,7 +445,7 @@ Early stopping prevents unnecessary iterations. If the value of `x` changes very
 
 This makes the program more efficient.
 
----
+- - -
 
 ### 6. History Recording
 
@@ -460,7 +459,7 @@ The code stores the values of `x`, `f(x)`, and the gradient during training. Thi
 
 The stored data also allows us to create the convergence plot.
 
----
+- - -
 
 ### 7. ASCII Convergence Plot
 
@@ -470,11 +469,11 @@ This is very helpful for beginners because it visually demonstrates convergence 
 
 A good convergence pattern usually shows:
 
-- A rapid decrease at the beginning.
-- A slower decrease near the minimum.
-- A flat region near the bottom of the plot.
+* A rapid decrease at the beginning.
+* A slower decrease near the minimum.
+* A flat region near the bottom of the plot.
 
----
+- - -
 
 ## Expected Behavior of the Algorithm
 
@@ -501,31 +500,26 @@ Minimum value f(x) found ≈ 1
 
 The exact printed values may contain very small numerical differences due to floating-point computation and numerical gradient approximation.
 
----
+- - -
 
 ## Important Learning Points for Students
 
 After studying and running this code, students should understand the following ideas:
 
-1. **Optimization means finding the best value of a variable.**  
+1. **Optimization means finding the best value of a variable.**\
    In this example, the best value is the `x` that minimizes `f(x)`.
-
-2. **The gradient tells the direction of change.**  
+2. **The gradient tells the direction of change.**\
    A positive gradient means the function increases as `x` increases. A negative gradient means the function decreases as `x` increases.
-
-3. **Gradient Descent moves opposite to the gradient.**  
+3. **Gradient Descent moves opposite to the gradient.**\
    This is why the update rule subtracts the gradient term.
-
-4. **The learning rate controls the step size.**  
+4. **The learning rate controls the step size.**\
    Choosing a good learning rate is important for stable convergence.
-
-5. **Numerical gradients make the code flexible.**  
+5. **Numerical gradients make the code flexible.**\
    The central difference method allows the program to estimate derivatives automatically.
-
-6. **Convergence can be visualized.**  
+6. **Convergence can be visualized.**\
    The ASCII plot shows how the objective function decreases over iterations.
 
----
+- - -
 
 ## Applications of Gradient Descent
 
@@ -551,7 +545,7 @@ In power and energy systems, optimization can help schedule batteries, renewable
 
 Gradient-based methods are used to tune controllers and minimize tracking error or energy consumption.
 
----
+- - -
 
 ## How Students Can Experiment with This Code
 
@@ -581,7 +575,7 @@ learning_rate = 0.5
 
 By comparing the results, students can see how learning rate affects convergence speed and stability.
 
----
+- - -
 
 ## Final Words
 
@@ -591,18 +585,18 @@ This pure Python implementation is especially useful for beginners because it av
 
 By understanding this example deeply, students will be better prepared to study advanced optimization techniques, machine learning algorithms, and neural network training methods.
 
----
+- - -
 
 ## Key Outcomes
 
 By the end of this tutorial, students should be able to:
 
-- Define Gradient Descent in simple terms.
-- Explain the role of the gradient in optimization.
-- Understand and apply the Gradient Descent update rule.
-- Implement Gradient Descent from scratch in Python.
-- Use numerical differentiation to estimate gradients.
-- Interpret convergence behavior using stored history and plots.
-- Modify the objective function and test new optimization examples.
+* Define Gradient Descent in simple terms.
+* Explain the role of the gradient in optimization.
+* Understand and apply the Gradient Descent update rule.
+* Implement Gradient Descent from scratch in Python.
+* Use numerical differentiation to estimate gradients.
+* Interpret convergence behavior using stored history and plots.
+* Modify the objective function and test new optimization examples.
 
 Gradient Descent may look simple in this one-variable example, but the same basic principle extends to large-scale machine learning and engineering optimization problems with thousands or even millions of variables.
