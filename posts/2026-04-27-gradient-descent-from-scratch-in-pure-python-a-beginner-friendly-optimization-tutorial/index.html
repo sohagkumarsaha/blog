@@ -1,0 +1,578 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  
+  
+  <title>Gradient Descent from Scratch in Pure Python: A Beginner-Friendly Optimization Tutorial | Sohag Kumar Saha</title>
+  <meta name="description" content="Learn the working principle of gradient descent using a fully user-defined Python implementation with numerical gradients, automatic minimum detection, and an ASCII convergence plot.">
+  <link rel="canonical" href="https://sohagkumarsaha.github.io/blog/posts/2026-04-27-gradient-descent-from-scratch-in-pure-python-a-beginner-friendly-optimization-tutorial/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Gradient Descent from Scratch in Pure Python: A Beginner-Friendly Optimization Tutorial">
+  <meta property="og:description" content="Learn the working principle of gradient descent using a fully user-defined Python implementation with numerical gradients, automatic minimum detection, and an ASCII convergence plot.">
+  <meta property="og:url" content="https://sohagkumarsaha.github.io/blog/posts/2026-04-27-gradient-descent-from-scratch-in-pure-python-a-beginner-friendly-optimization-tutorial/">
+  <meta property="og:image" content="https://sohagkumarsaha.github.io/blog/assets/images/og-image.svg">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="/blog/assets/images/avatar.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/blog/assets/css/style.css">
+</head>
+<body data-current-url="/posts/2026-04-27-gradient-descent-from-scratch-in-pure-python-a-beginner-friendly-optimization-tutorial/" data-site-root="/blog/">
+  <header class="site-header">
+  <div class="header-inner">
+    <a class="site-brand" href="/blog/" aria-label="Home">
+      <span class="brand-mark">S</span>
+      <span>Sohag Kumar Saha</span>
+    </a>
+    <nav class="top-nav" aria-label="Primary navigation">
+      <a href="/blog/">Home</a>
+      <a href="/blog/pages/academic-profile/">Academic Profile</a>
+      <a href="/blog/pages/publications/">Publications</a>
+      <a href="/blog/pages/research-projects/">Research</a>
+      <a href="/blog/admin/">Admin</a>
+    </nav>
+  </div>
+</header>
+
+
+  <div class="site-shell">
+    <main id="main-content" class="content-area">
+      
+        <article class="article-page">
+          <header class="article-header">
+            <p class="eyebrow">Optimization</p>
+            <h1>Gradient Descent from Scratch in Pure Python: A Beginner-Friendly Optimization Tutorial</h1>
+            <p class="post-meta">April 27, 2026</p>
+            
+              <div class="tag-list" aria-label="Tags">
+                <span class="tag">#machine_learning</span>
+              </div>
+            
+          </header>
+          <div class="article-content">
+            <p>Optimization is one of the most important ideas in engineering, data science, machine learning, control systems, and artificial intelligence. Many modern algorithms try to answer one simple question:</p>
+<blockquote>
+<p>How can we find the best value of a variable that minimizes or maximizes a function?</p>
+</blockquote>
+<p>In this post, we will learn <strong>Gradient Descent</strong> from the ground up using a pure Python implementation. The goal is not only to run the algorithm, but also to understand how it works internally. The implementation uses only built-in Python features, so students can focus on the fundamental concept without depending on external libraries such as NumPy or Matplotlib.</p>
+<p>The example function used in this tutorial is:</p>
+<p>$$
+f(x) = x^2 + 1
+$$</p>
+<p>This is a simple convex function. Its minimum occurs near:</p>
+<p>$$
+x = 0, \qquad f(x) = 1
+$$</p>
+<p>The Python code will start from an initial guess, repeatedly update the value of <code>x</code>, and gradually move toward the minimum point.</p>
+<hr>
+<h2>What Is Gradient Descent?</h2>
+<p><strong>Gradient Descent</strong> is an iterative optimization algorithm used to find the minimum value of a function. It works by moving step-by-step in the direction where the function decreases the fastest.</p>
+<p>For a function (f(x)), the basic update rule is:</p>
+<p>$$
+x*{new} = x*{old} - \alpha \frac{df(x)}{dx}
+$$</p>
+<p>where:</p>
+<ul>
+<li>$x_{old}$ is the current value of the variable.</li>
+<li>$x_{new}$ is the updated value after one step.</li>
+<li>$\alpha$ is the learning rate.</li>
+<li>$\frac{df(x)}{dx}$ is the gradient or derivative of the function.</li>
+</ul>
+<p>The derivative tells us the slope of the function at the current point. If the slope is positive, the algorithm moves left. If the slope is negative, the algorithm moves right. Repeating this process brings the value of <code>x</code> closer to the minimum.</p>
+<hr>
+<h2>Why Learn Gradient Descent?</h2>
+<p>Gradient Descent is a foundational algorithm in many technical fields. It is widely used in:</p>
+<ol>
+<li><strong>Machine learning</strong> for training models by minimizing loss functions.</li>
+<li><strong>Deep learning</strong> for updating neural network weights.</li>
+<li><strong>Engineering optimization</strong> for finding efficient system parameters.</li>
+<li><strong>Control systems</strong> for tuning controllers and minimizing cost functions.</li>
+<li><strong>Economics and operations research</strong> for cost minimization and resource allocation.</li>
+<li><strong>Energy management systems</strong> for optimizing dispatch, battery usage, and operating cost.</li>
+</ol>
+<p>Understanding Gradient Descent helps students understand how many advanced algorithms learn from data or improve system performance.</p>
+<hr>
+<h2>Working Principle of Gradient Descent</h2>
+<p>The working process of Gradient Descent can be explained in five simple steps:</p>
+<h3>Step 1: Define the objective function</h3>
+<p>The objective function is the function we want to minimize. In this tutorial, we use:</p>
+<p>$$
+f(x) = x^2 + 1
+$$</p>
+<p>The goal is to find the value of <code>x</code> that gives the smallest value of <code>f(x)</code>.</p>
+<h3>Step 2: Choose an initial value</h3>
+<p>The algorithm needs a starting point. In the code, we start from:</p>
+<pre><code class="language-python">x = 10.0
+</code></pre>
+<p>This means the algorithm begins far away from the true minimum at <code>x = 0</code>.</p>
+<h3>Step 3: Compute the gradient</h3>
+<p>The gradient tells us the direction of the steepest increase. Since we want to minimize the function, we move in the opposite direction of the gradient.</p>
+<p>In this implementation, the gradient is computed numerically using the <strong>central difference method</strong>:</p>
+<p>$$
+f'(x) \approx \frac{f(x+h)-f(x-h)}{2h}
+$$</p>
+<p>This is useful for learning because students do not need to manually derive the derivative for every function.</p>
+<h3>Step 4: Update the value of <code>x</code></h3>
+<p>The update rule is:</p>
+<pre><code class="language-python">x_new = x - learning_rate * grad
+</code></pre>
+<p>The learning rate controls the step size. A small learning rate may converge slowly. A very large learning rate may overshoot the minimum.</p>
+<h3>Step 5: Repeat until convergence</h3>
+<p>The algorithm continues updating <code>x</code> until the changes become very small. When the update difference is below a defined tolerance, the algorithm stops early.</p>
+<hr>
+<h2>Complete Python Code: Gradient Descent from Scratch</h2>
+<p>The following code implements Gradient Descent using only built-in Python. It includes:</p>
+<ul>
+<li>A user-defined objective function.</li>
+<li>Numerical gradient calculation.</li>
+<li>Automatic theoretical minimum estimation.</li>
+<li>Iteration history recording.</li>
+<li>A text-based ASCII convergence plot.</li>
+</ul>
+<pre><code class="language-python"># =============================================
+# Gradient Descent from scratch - Pure Python
+# AUTOMATED gradient + FULLY AUTOMATIC theoretical minimum
+# + CONVERGENCE PLOT using only built-in Python (no libraries!)
+# Benchmark function example: f(x) = x² + 1
+# =============================================
+
+
+def objective(x):
+    &quot;&quot;&quot;The ONLY function you need to change.
+    Put any mathematical expression you want to minimize here.
+    
+    In this example, the objective function is:
+        f(x) = x^2 + 1
+    
+    The minimum value of this function occurs at x = 0,
+    where f(x) = 1.
+    &quot;&quot;&quot;
+    return (x ** 2) + 1
+
+
+def numerical_gradient(x, func, h=1e-8):
+    &quot;&quot;&quot;Automatically compute the derivative using central difference.
+    
+    The central difference formula is:
+        f'(x) ≈ [f(x + h) - f(x - h)] / (2h)
+    
+    This allows us to estimate the gradient without manually deriving
+    the mathematical derivative of the function.
+    &quot;&quot;&quot;
+    return (func(x + h) - func(x - h)) / (2 * h)
+
+
+def find_theoretical_minimum(func, grad_func, x_start=0.0, learning_rate=0.01,
+                             max_iter=300, tol=1e-12):
+    &quot;&quot;&quot;Automatically finds a high-precision theoretical minimum.
+    
+    This helper function also applies gradient descent, but with a
+    smaller learning rate and tighter tolerance. It is used as a
+    reference result to compare with the main gradient descent output.
+    &quot;&quot;&quot;
+    x = x_start
+
+    for _ in range(max_iter):
+        # Compute the gradient at the current point
+        grad = grad_func(x, func)
+
+        # Move opposite to the gradient direction
+        x_new = x - learning_rate * grad
+
+        # Stop if the update is extremely small
+        if abs(x_new - x) &lt; tol:
+            break
+
+        # Update x for the next iteration
+        x = x_new
+
+    return x, func(x)
+
+
+# =============================================
+# Run Gradient Descent + Record History for Plot
+# =============================================
+
+# The learning rate controls how large each update step is.
+learning_rate = 0.1
+
+# Maximum number of iterations allowed.
+max_iterations = 1000
+
+# Initial guess. The algorithm starts from x = 10.
+x = 10.0
+
+print(&quot;Starting gradient descent with AUTOMATED gradient...&quot;)
+print(f&quot;Initial x = {x:.6f}, f(x) = {objective(x):.6f}\n&quot;)
+
+# Lists to store history for plotting convergence.
+# x_history stores all x values.
+# f_history stores all function values.
+# grad_history stores all gradient values.
+x_history = [x]
+f_history = [objective(x)]
+grad_history = []
+
+# Main gradient descent loop
+for iteration in range(max_iterations):
+    # Compute numerical gradient at current x
+    grad = numerical_gradient(x, objective)
+    grad_history.append(grad)
+
+    # Apply the gradient descent update rule
+    x_new = x - learning_rate * grad
+
+    # Evaluate the function at the new x value
+    f_new = objective(x_new)
+
+    # Store updated values for later analysis and plotting
+    x_history.append(x_new)
+    f_history.append(f_new)
+
+    # Print progress every 5 iterations
+    if iteration % 5 == 0:
+        print(
+            f&quot;Iter {iteration:2d} | &quot;
+            f&quot;x = {x_new:8.6f} | &quot;
+            f&quot;f(x) = {f_new:8.6f} | &quot;
+            f&quot;gradient ≈ {grad:8.6f}&quot;
+        )
+
+    # Early stopping condition:
+    # if x changes very little, the algorithm has converged.
+    if abs(x_new - x) &lt; 1e-8:
+        print(&quot;\nConverged early!&quot;)
+        break
+
+    # Update x for the next iteration
+    x = x_new
+
+print(&quot;\n=== Final Result from Gradient Descent ===&quot;)
+print(f&quot;Optimal x found ≈ {x:.10f}&quot;)
+print(f&quot;Minimum value f(x) found ≈ {objective(x):.10f}&quot;)
+
+
+# =============================================
+# Automatic theoretical minimum
+# =============================================
+
+print(&quot;\nComputing theoretical minimum automatically...&quot;)
+x_theory, f_theory = find_theoretical_minimum(objective, numerical_gradient)
+
+print(&quot;=== Theoretical Minimum (auto-detected) ===&quot;)
+print(f&quot;Optimal x ≈ {x_theory:.10f}&quot;)
+print(f&quot;Minimum value f(x) ≈ {f_theory:.10f}&quot;)
+
+
+# =============================================
+# CREATE CONVERGENCE PLOT using ONLY built-in Python
+# Text-based ASCII plot - no matplotlib needed
+# =============================================
+
+
+def create_ascii_plot(x_vals, f_vals, title=&quot;Convergence Plot&quot;, width=70, height=20):
+    &quot;&quot;&quot;Creates a simple text-based ASCII plot of convergence.
+    
+    This function visualizes how f(x) changes over iterations.
+    It does not require any external plotting library.
+    &quot;&quot;&quot;
+
+    # Check if the input lists are empty
+    if not x_vals or not f_vals:
+        print(&quot;No data to plot.&quot;)
+        return
+
+    # Find minimum and maximum values for scaling
+    x_min, x_max = min(x_vals), max(x_vals)
+    f_min, f_max = min(f_vals), max(f_vals)
+
+    # Avoid division by zero if all f values are the same
+    f_range = f_max - f_min if f_max &gt; f_min else 1.0
+
+    print(f&quot;\n=== {title} ===&quot;)
+    print(
+        f&quot;X range: {x_min:.4f} → {x_max:.4f} | &quot;
+        f&quot;f(x) range: {f_min:.6f} → {f_max:.6f}&quot;
+    )
+    print(&quot;Minimal point should be near the bottom of the plot.\n&quot;)
+
+    # Build the plot line by line from high f(x) to low f(x)
+    for row in range(height):
+        # Current function-value level represented by this row
+        f_level = f_max - (row / (height - 1)) * f_range
+        line = &quot;&quot;
+
+        for col in range(width):
+            # Map the current column to an index in the history list
+            idx = int(col / (width - 1) * (len(x_vals) - 1))
+
+            if idx &gt;= len(f_vals):
+                idx = len(f_vals) - 1
+
+            point_f = f_vals[idx]
+
+            # Draw '*' if a convergence point is close to this row level
+            if abs(point_f - f_level) &lt; f_range / (height * 1.5):
+                line += &quot;*&quot;
+            else:
+                # Draw a vertical line near the final minimum point
+                final_x_idx = (
+                    int((x - x_min) / (x_max - x_min) * (width - 1))
+                    if x_max &gt; x_min
+                    else width // 2
+                )
+
+                if col == final_x_idx and row &gt; height * 0.7:
+                    line += &quot;|&quot;
+                else:
+                    line += &quot; &quot;
+
+        print(line)
+
+    # X-axis labels
+    print(&quot;-&quot; * width)
+    print(f&quot;{'Start':&lt;10}{'→ Convergence →':^{width-20}}{'End/Min':&gt;10}&quot;)
+    print(
+        f&quot;Initial x = {x_vals[0]:.2f}                  &quot;
+        f&quot;Final x ≈ {x_vals[-1]:.4f} &quot;
+        f&quot;(should be near theoretical {x_theory:.4f})&quot;
+    )
+
+
+# Generate the ASCII plot
+create_ascii_plot(
+    x_history,
+    f_history,
+    &quot;Gradient Descent Convergence (f(x) vs Iterations)&quot;
+)
+
+print(&quot;\nInterpretation:&quot;)
+print(&quot;• The '*' trace shows how f(x) decreases over iterations.&quot;)
+print(&quot;• It should drop quickly at first then flatten near the bottom → good convergence.&quot;)
+print(&quot;• The vertical '|' marks the final minimal point found.&quot;)
+print(&quot;• If the plot flattens at the bottom and matches the theoretical minimum, optimization worked!&quot;)
+</code></pre>
+<hr>
+<h2>Explanation of the Code</h2>
+<h3>1. Objective Function</h3>
+<pre><code class="language-python">def objective(x):
+    return (x ** 2) + 1
+</code></pre>
+<p>This function defines the mathematical expression that the algorithm will minimize. Students can replace this function with another expression to test different optimization problems.</p>
+<p>For example:</p>
+<pre><code class="language-python">return (x - 3) ** 2 + 5
+</code></pre>
+<p>This new function would have its minimum near <code>x = 3</code>.</p>
+<hr>
+<h3>2. Numerical Gradient Calculation</h3>
+<pre><code class="language-python">def numerical_gradient(x, func, h=1e-8):
+    return (func(x + h) - func(x - h)) / (2 * h)
+</code></pre>
+<p>This function calculates the derivative automatically using the central difference method. This is useful because students do not need to manually calculate the derivative.</p>
+<p>For the example function:</p>
+<p>$$
+f(x) = x^2 + 1
+$$</p>
+<p>The exact derivative is:</p>
+<p>$$
+f'(x) = 2x
+$$</p>
+<p>However, the code estimates this derivative numerically. This makes the implementation more flexible because we can change the objective function without changing the gradient function.</p>
+<hr>
+<h3>3. Gradient Descent Update</h3>
+<pre><code class="language-python">x_new = x - learning_rate * grad
+</code></pre>
+<p>This is the most important line in the program. It moves the current value of <code>x</code> in the direction that reduces the objective function.</p>
+<p>If the gradient is positive, the update decreases <code>x</code>. If the gradient is negative, the update increases <code>x</code>. The goal is to keep moving until the gradient becomes close to zero.</p>
+<hr>
+<h3>4. Learning Rate</h3>
+<pre><code class="language-python">learning_rate = 0.1
+</code></pre>
+<p>The learning rate determines the size of each step.</p>
+<ul>
+<li>If the learning rate is too small, convergence will be slow.</li>
+<li>If the learning rate is too large, the algorithm may overshoot the minimum.</li>
+<li>A suitable learning rate helps the algorithm converge smoothly.</li>
+</ul>
+<p>For this simple function, <code>0.1</code> works well.</p>
+<hr>
+<h3>5. Early Stopping</h3>
+<pre><code class="language-python">if abs(x_new - x) &lt; 1e-8:
+    print(&quot;\nConverged early!&quot;)
+    break
+</code></pre>
+<p>Early stopping prevents unnecessary iterations. If the value of <code>x</code> changes very little between two consecutive iterations, the algorithm assumes that it has already reached the minimum region.</p>
+<p>This makes the program more efficient.</p>
+<hr>
+<h3>6. History Recording</h3>
+<pre><code class="language-python">x_history = [x]
+f_history = [objective(x)]
+grad_history = []
+</code></pre>
+<p>The code stores the values of <code>x</code>, <code>f(x)</code>, and the gradient during training. This is useful for analyzing the optimization process.</p>
+<p>The stored data also allows us to create the convergence plot.</p>
+<hr>
+<h3>7. ASCII Convergence Plot</h3>
+<p>The function <code>create_ascii_plot()</code> generates a text-based plot using only built-in Python. The <code>*</code> symbols show how the objective function decreases over time.</p>
+<p>This is very helpful for beginners because it visually demonstrates convergence without requiring external libraries.</p>
+<p>A good convergence pattern usually shows:</p>
+<ul>
+<li>A rapid decrease at the beginning.</li>
+<li>A slower decrease near the minimum.</li>
+<li>A flat region near the bottom of the plot.</li>
+</ul>
+<hr>
+<h2>Expected Behavior of the Algorithm</h2>
+<p>Since the objective function is:</p>
+<p>$$
+f(x) = x^2 + 1
+$$</p>
+<p>and the initial value is:</p>
+<pre><code class="language-python">x = 10.0
+</code></pre>
+<p>Gradient Descent will gradually move <code>x</code> toward zero. As <code>x</code> approaches zero, <code>f(x)</code> approaches one.</p>
+<p>Therefore, the expected result is approximately:</p>
+<pre><code class="language-text">Optimal x found ≈ 0
+Minimum value f(x) found ≈ 1
+</code></pre>
+<p>The exact printed values may contain very small numerical differences due to floating-point computation and numerical gradient approximation.</p>
+<hr>
+<h2>Important Learning Points for Students</h2>
+<p>After studying and running this code, students should understand the following ideas:</p>
+<ol>
+<li><strong>Optimization means finding the best value of a variable.</strong><br>
+In this example, the best value is the <code>x</code> that minimizes <code>f(x)</code>.</li>
+<li><strong>The gradient tells the direction of change.</strong><br>
+A positive gradient means the function increases as <code>x</code> increases. A negative gradient means the function decreases as <code>x</code> increases.</li>
+<li><strong>Gradient Descent moves opposite to the gradient.</strong><br>
+This is why the update rule subtracts the gradient term.</li>
+<li><strong>The learning rate controls the step size.</strong><br>
+Choosing a good learning rate is important for stable convergence.</li>
+<li><strong>Numerical gradients make the code flexible.</strong><br>
+The central difference method allows the program to estimate derivatives automatically.</li>
+<li><strong>Convergence can be visualized.</strong><br>
+The ASCII plot shows how the objective function decreases over iterations.</li>
+</ol>
+<hr>
+<h2>Applications of Gradient Descent</h2>
+<p>Gradient Descent is used in many real-world problems, including:</p>
+<h3>Machine Learning Model Training</h3>
+<p>In machine learning, models are trained by minimizing a loss function. Gradient Descent updates model parameters so that prediction error becomes smaller.</p>
+<h3>Neural Networks and Deep Learning</h3>
+<p>Deep learning uses advanced forms of Gradient Descent such as stochastic gradient descent, mini-batch gradient descent, Adam, and RMSProp to train large neural networks.</p>
+<h3>Engineering Design Optimization</h3>
+<p>Engineers use optimization to minimize cost, weight, energy consumption, or error while satisfying design constraints.</p>
+<h3>Energy Management Systems</h3>
+<p>In power and energy systems, optimization can help schedule batteries, renewable energy sources, diesel generators, and grid power to reduce operating costs.</p>
+<h3>Control Systems</h3>
+<p>Gradient-based methods are used to tune controllers and minimize tracking error or energy consumption.</p>
+<hr>
+<h2>How Students Can Experiment with This Code</h2>
+<p>Students can modify only the <code>objective()</code> function and observe how the algorithm behaves.</p>
+<p>For example, try this function:</p>
+<pre><code class="language-python">def objective(x):
+    return (x - 5) ** 2 + 2
+</code></pre>
+<p>The minimum should occur near:</p>
+<pre><code class="language-text">x = 5
+f(x) = 2
+</code></pre>
+<p>Students can also experiment with the learning rate:</p>
+<pre><code class="language-python">learning_rate = 0.01
+learning_rate = 0.1
+learning_rate = 0.5
+</code></pre>
+<p>By comparing the results, students can see how learning rate affects convergence speed and stability.</p>
+<hr>
+<h2>Final Words</h2>
+<p>Gradient Descent is one of the most fundamental algorithms in optimization and machine learning. Although the mathematical idea is simple, it is the foundation of many powerful modern learning systems.</p>
+<p>This pure Python implementation is especially useful for beginners because it avoids external libraries and clearly shows every step of the algorithm. Students can see how the objective function is defined, how the gradient is estimated, how the update rule works, and how convergence can be visualized using a simple ASCII plot.</p>
+<p>By understanding this example deeply, students will be better prepared to study advanced optimization techniques, machine learning algorithms, and neural network training methods.</p>
+<hr>
+<h2>Key Outcomes</h2>
+<p>By the end of this tutorial, students should be able to:</p>
+<ul>
+<li>Define Gradient Descent in simple terms.</li>
+<li>Explain the role of the gradient in optimization.</li>
+<li>Understand and apply the Gradient Descent update rule.</li>
+<li>Implement Gradient Descent from scratch in Python.</li>
+<li>Use numerical differentiation to estimate gradients.</li>
+<li>Interpret convergence behavior using stored history and plots.</li>
+<li>Modify the objective function and test new optimization examples.</li>
+</ul>
+<p>Gradient Descent may look simple in this one-variable example, but the same basic principle extends to large-scale machine learning and engineering optimization problems with thousands or even millions of variables.</p>
+
+          </div>
+        </article>
+      
+    </main>
+
+    <aside class="sidebar" aria-label="Sidebar">
+  <section class="profile-card">
+    <img src="/blog/assets/images/avatar.svg" alt="Sohag Kumar Saha avatar" class="profile-avatar">
+    <h2>Sohag Kumar Saha</h2>
+    <p>Researcher and educator writing about power systems, smart grid, energy management systems, ML and AI in energy sector, engineering systems, scientific computing, and academic life.</p>
+  </section>
+
+  <section class="sidebar-card">
+    <h2>Menu</h2>
+    <nav class="sidebar-menu" aria-label="Secondary navigation">
+      <a href="/blog/">Home</a>
+      <a href="/blog/#blog">Blog</a>
+      <a href="/blog/pages/academic-profile/">Academic Profile</a>
+      <a href="/blog/pages/publications/">Publications</a>
+      <a href="/blog/pages/research-projects/">Research Projects</a>
+      <a href="/blog/pages/teaching/">Teaching</a>
+      <a href="/blog/pages/cv/">CV</a>
+    </nav>
+  </section>
+
+  <section class="sidebar-card">
+    <h2>Most popular <span>(for you)</span></h2>
+    <ol id="popular-posts" class="sidebar-list">
+      <li class="muted">Read a few posts to build your personal list.</li>
+    </ol>
+  </section>
+
+  <section class="sidebar-card">
+    <h2>You might also like</h2>
+    <ol id="recommended-posts" class="sidebar-list">
+      <li class="muted">Recommendations appear after you read posts.</li>
+    </ol>
+  </section>
+</aside>
+
+  </div>
+
+  <footer class="site-footer">
+  <p>&copy; Sohag Kumar Saha. Built with Eleventy, Decap CMS, and GitHub Pages.</p>
+</footer>
+
+
+  <script>
+    window.__POSTS__ = [{"id":"gradient-descent-from-scratch-in-pure-python-a-beginner-friendly-optimization-tutorial","title":"Gradient Descent from Scratch in Pure Python: A Beginner-Friendly Optimization Tutorial","url":"/posts/2026-04-27-gradient-descent-from-scratch-in-pure-python-a-beginner-friendly-optimization-tutorial/","date":"2026-04-27T00:00:00.000Z","category":"Optimization","tags":["machine_learning"],"description":"Learn the working principle of gradient descent using a fully user-defined Python implementation with numerical gradients, automatic minimum detection, and an ASCII convergence plot."},{"id":"code-walkthrough-quicksort","title":"Code Walk-through: Quicksort","url":"/posts/2025-02-15-code-walkthrough-quicksort/","date":"2025-02-15T00:00:00.000Z","category":"code","tags":["explanation"],"description":"A C quicksort implementation followed by a styled line-by-line explanation."},{"id":"c-embedded-led-control","title":"C – Embedded LED Control","url":"/posts/2025-02-10-c-embedded-led-control/","date":"2025-02-10T00:00:00.000Z","category":"code","tags":["c","code"],"description":"A small C example for toggling an LED in an embedded-style loop."},{"id":"matlab-finite-element-solver","title":"MATLAB Finite Element Solver","url":"/posts/2025-02-05-matlab-finite-element-solver/","date":"2025-02-05T00:00:00.000Z","category":"code","tags":["matlab","code"],"description":"A minimal MATLAB finite element solver for a one-dimensional bar problem."},{"id":"python-signal-processing","title":"Python Signal Processing","url":"/posts/2025-02-01-python-signal-processing/","date":"2025-02-01T00:00:00.000Z","category":"code","tags":["python","code"],"description":"A complete Python example for generating, filtering, and analyzing a noisy signal."},{"id":"frequently-asked-questions","title":"Frequently Asked Questions","url":"/posts/2025-01-25-frequently-asked-questions/","date":"2025-01-25T00:00:00.000Z","category":"teaching","tags":["accordion"],"description":"A short FAQ post using an accordion component built with vanilla JavaScript."},{"id":"python-vs-matlab-code","title":"Python vs MATLAB Code","url":"/posts/2025-01-20-python-vs-matlab-code/","date":"2025-01-20T00:00:00.000Z","category":"code","tags":["tabs","code"],"description":"A tabbed comparison of Python and MATLAB code snippets with syntax highlighting."},{"id":"project-demo-slider","title":"Project Demo Slider","url":"/posts/2025-01-15-project-demo-slider/","date":"2025-01-15T00:00:00.000Z","category":"engineering","tags":["slider"],"description":"An image slider created with a reusable Nunjucks macro and vanilla JavaScript."},{"id":"conference-trip-gallery","title":"Conference Trip Gallery","url":"/posts/2025-01-10-conference-trip-gallery/","date":"2025-01-10T00:00:00.000Z","category":"travel","tags":["gallery","travel"],"description":"A responsive gallery rendered through a Nunjucks macro."},{"id":"research-notes-ai-trends","title":"Research Notes: AI Trends","url":"/posts/2025-01-05-research-notes-ai-trends/","date":"2025-01-05T00:00:00.000Z","category":"ai","tags":["notes","ai"],"description":"Structured notes on practical AI trends for academic and engineering workflows."},{"id":"hello-world","title":"Hello World – My First Blog Post","url":"/posts/2025-01-01-hello-world/","date":"2025-01-01T00:00:00.000Z","category":"writing","tags":["intro","writing"],"description":"A simple opening post with rich text, links, emphasis, and a blockquote."}];
+  </script>
+  <script src="/blog/assets/js/main.js"></script>
+  <script src="/blog/assets/js/slider.js"></script>
+  <script src="/blog/assets/js/tabs.js"></script>
+  <script src="/blog/assets/js/accordion.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-matlab.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-c.min.js"></script>
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        processEscapes: true
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</body>
+</html>
