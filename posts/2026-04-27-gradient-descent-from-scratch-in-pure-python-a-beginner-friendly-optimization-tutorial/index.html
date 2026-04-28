@@ -51,8 +51,7 @@
             
           </header>
           <div class="article-content">
-            <h1>Gradient Descent from Scratch in Pure Python: A Beginner-Friendly Optimization Tutorial</h1>
-<p>Optimization is one of the most important ideas in engineering, data science, machine learning, control systems, and artificial intelligence. Many modern algorithms try to answer one simple question:</p>
+            <p>Optimization is one of the most important ideas in engineering, data science, machine learning, control systems, and artificial intelligence. Many modern algorithms try to answer one simple question:</p>
 <blockquote>
 <p>How can we find the best value of a variable that minimizes or maximizes a function?</p>
 </blockquote>
@@ -71,14 +70,14 @@ $$</p>
 <p><strong>Gradient Descent</strong> is an iterative optimization algorithm used to find the minimum value of a function. It works by moving step-by-step in the direction where the function decreases the fastest.</p>
 <p>For a function (f(x)), the basic update rule is:</p>
 <p>$$
-x_{new} = x_{old} - \alpha \frac{df(x)}{dx}
+x*{new} = x*{old} - \alpha \frac{df(x)}{dx}
 $$</p>
 <p>where:</p>
 <ul>
-<li>(x_{old}) is the current value of the variable.</li>
-<li>(x_{new}) is the updated value after one step.</li>
-<li>(\alpha) is the learning rate.</li>
-<li>(\frac{df(x)}{dx}) is the gradient or derivative of the function.</li>
+<li>$(x_{old})$ is the current value of the variable.</li>
+<li>$(x_{new})$ is the updated value after one step.</li>
+<li>$(\alpha)&amp; is the learning rate.</li>
+<li>$(\frac{df(x)}{dx})$ is the gradient or derivative of the function.</li>
 </ul>
 <p>The derivative tells us the slope of the function at the current point. If the slope is positive, the algorithm moves left. If the slope is negative, the algorithm moves right. Repeating this process brings the value of <code>x</code> closer to the minimum.</p>
 <hr>
@@ -442,30 +441,18 @@ Minimum value f(x) found ≈ 1
 <h2>Important Learning Points for Students</h2>
 <p>After studying and running this code, students should understand the following ideas:</p>
 <ol>
-<li>
-<p><strong>Optimization means finding the best value of a variable.</strong><br>
-In this example, the best value is the <code>x</code> that minimizes <code>f(x)</code>.</p>
-</li>
-<li>
-<p><strong>The gradient tells the direction of change.</strong><br>
-A positive gradient means the function increases as <code>x</code> increases. A negative gradient means the function decreases as <code>x</code> increases.</p>
-</li>
-<li>
-<p><strong>Gradient Descent moves opposite to the gradient.</strong><br>
-This is why the update rule subtracts the gradient term.</p>
-</li>
-<li>
-<p><strong>The learning rate controls the step size.</strong><br>
-Choosing a good learning rate is important for stable convergence.</p>
-</li>
-<li>
-<p><strong>Numerical gradients make the code flexible.</strong><br>
-The central difference method allows the program to estimate derivatives automatically.</p>
-</li>
-<li>
-<p><strong>Convergence can be visualized.</strong><br>
-The ASCII plot shows how the objective function decreases over iterations.</p>
-</li>
+<li><strong>Optimization means finding the best value of a variable.</strong><br>
+In this example, the best value is the <code>x</code> that minimizes <code>f(x)</code>.</li>
+<li><strong>The gradient tells the direction of change.</strong><br>
+A positive gradient means the function increases as <code>x</code> increases. A negative gradient means the function decreases as <code>x</code> increases.</li>
+<li><strong>Gradient Descent moves opposite to the gradient.</strong><br>
+This is why the update rule subtracts the gradient term.</li>
+<li><strong>The learning rate controls the step size.</strong><br>
+Choosing a good learning rate is important for stable convergence.</li>
+<li><strong>Numerical gradients make the code flexible.</strong><br>
+The central difference method allows the program to estimate derivatives automatically.</li>
+<li><strong>Convergence can be visualized.</strong><br>
+The ASCII plot shows how the objective function decreases over iterations.</li>
 </ol>
 <hr>
 <h2>Applications of Gradient Descent</h2>
